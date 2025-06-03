@@ -1,33 +1,39 @@
 // components/ProjectModal.js
-export default function ProjectModal({ project, onClose }) {
+
+import { ProjectType } from '@/app/page';
+
+type ProjectModalProps = {
+  project: ProjectType | null; // project bisa null jika modal tidak aktif
+  onClose: () => void; // Fungsi tanpa argumen dan tidak mengembalikan apa-apa
+};
+
+export default function ProjectModal({ project, onClose }: ProjectModalProps) {
+  // Terapkan tipe di sini
   if (!project) {
-    // Jika tidak ada project yang dipilih, jangan render apa-apa
     return null;
   }
 
   return (
     <div
       className='fixed inset-0 flex justify-center items-center z-50 p-4 sm:p-6 overflow-y-auto backdrop-blur-md bg-white/30'
-      onClick={onClose} // Menutup modal jika klik di luar area konten modal
+      onClick={onClose}
     >
       <div
         className='bg-white p-6 sm:p-8 rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative font-sans'
-        onClick={(e) => e.stopPropagation()} // Mencegah penutupan modal jika klik di dalam area konten
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Tombol Close di dalam Modal */}
         <button
           onClick={onClose}
           className='absolute top-4 right-4 text-gray-600 hover:text-black text-3xl font-mono'
           aria-label='Close modal'
         >
-          &times; {/* Karakter 'x' untuk close */}
+          &times;
         </button>
 
         <h3 className='font-mono text-2xl sm:text-3xl font-bold text-black mb-4'>
           {project.title}
         </h3>
 
-        {/* Gambar Proyek di Modal */}
         {project.imageUrl && (
           <div className='w-full h-56 sm:h-72 bg-gray-200 rounded mb-6 overflow-hidden'>
             <img
@@ -42,14 +48,12 @@ export default function ProjectModal({ project, onClose }) {
           <p className='font-mono text-sm text-gray-500'>
             Role: {project.role}
           </p>
-
           <h4 className='font-mono text-lg font-semibold text-black pt-2'>
             Project Description:
           </h4>
           <p className='text-base leading-relaxed'>
             {project.details?.description || project.brief}
           </p>
-
           {project.details?.responsibilities &&
             project.details.responsibilities.length > 0 && (
               <>
@@ -63,7 +67,6 @@ export default function ProjectModal({ project, onClose }) {
                 </ul>
               </>
             )}
-
           <h4 className='font-mono text-lg font-semibold text-black pt-2'>
             Technologies Used:
           </h4>
@@ -77,8 +80,6 @@ export default function ProjectModal({ project, onClose }) {
               </span>
             ))}
           </div>
-
-          {/* Tambahkan link jika ada */}
           {project.details?.links && (
             <div className='pt-4'>
               <h4 className='font-mono text-lg font-semibold text-black'>
@@ -109,7 +110,6 @@ export default function ProjectModal({ project, onClose }) {
             </div>
           )}
         </div>
-
         <button
           onClick={onClose}
           className='mt-8 bg-black text-white font-sans px-6 py-2 rounded hover:bg-gray-800 transition-colors duration-300'

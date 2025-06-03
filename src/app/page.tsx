@@ -9,7 +9,25 @@ import SkillsSection from '@/components/SkillSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 
-const projectsData = [
+export type ProjectType = {
+  id: string;
+  title: string;
+  role: string;
+  brief: string;
+  techStack: string[];
+  imageUrl?: string; // Opsional jika tidak semua proyek punya gambar
+  details?: {
+    // Opsional jika tidak semua proyek punya detail lengkap
+    description?: string;
+    responsibilities?: string[];
+    links?: {
+      live?: string;
+      repo?: string;
+    };
+  };
+};
+
+const projectsData: ProjectType[] = [
   {
     id: 'semuaada',
     title: 'SemuaAda (ERP System)',
@@ -159,10 +177,12 @@ const projectsData = [
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(
+    null
+  );
 
   // Fungsi untuk membuka modal
-  const handleOpenModal = (project) => {
+  const handleOpenModal = (project: ProjectType) => {
     setSelectedProject(project);
     setIsModalOpen(true);
     document.body.style.overflow = 'hidden'; // Mencegah scroll di background

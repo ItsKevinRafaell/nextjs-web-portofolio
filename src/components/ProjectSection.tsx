@@ -1,6 +1,7 @@
 // components/ProjectsSection.js
-import { motion } from 'framer-motion'; // Import motion
+import { motion } from 'framer-motion';
 import ProjectCard from './ProjectCard';
+import { ProjectType } from '@/app/page';
 
 // Definisikan varian animasi
 const sectionVariants = {
@@ -8,14 +9,23 @@ const sectionVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-export default function ProjectsSection({ projects, onOpenModal }) {
+type ProjectsSectionProps = {
+  projects: ProjectType[]; // Array dari ProjectType
+  onOpenModal: (project: ProjectType) => void; // Fungsi yang menerima ProjectType
+};
+
+export default function ProjectsSection({
+  projects,
+  onOpenModal,
+}: ProjectsSectionProps) {
+  // Terapkan tipe di sini
   return (
-    <motion.section // Gunakan motion.section
+    <motion.section
       id='projects'
       className='w-full py-16 sm:py-20 md:py-24 px-6 sm:px-8 lg:px-16 bg-white text-black'
       initial='hidden'
       whileInView='visible'
-      viewport={{ once: true, amount: 0.15 }} // amount lebih kecil karena section ini mungkin lebih tinggi
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       variants={sectionVariants}
     >
@@ -24,10 +34,9 @@ export default function ProjectsSection({ projects, onOpenModal }) {
           Featured Projects
         </h2>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10'>
-          {/* Animasi stagger untuk ProjectCard bisa ditambahkan di sini nanti */}
           {projects.map((project) => (
             <ProjectCard
-              key={project.id}
+              key={project.id} // Key dipasang di sini
               project={project}
               onOpenModal={onOpenModal}
             />

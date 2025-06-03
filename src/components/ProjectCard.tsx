@@ -1,8 +1,26 @@
 // components/ProjectCard.js
-export default function ProjectCard({ project, onOpenModal }) {
+
+import { ProjectType } from '@/app/page';
+
+// Asumsikan ProjectType diimpor dari lokasi definisi tipenya
+// import type { ProjectType } from '@/types'; // Contoh jika di file types.ts
+// atau import type { ProjectType } from '@/app/page'; // Jika diekspor dari page.tsx
+
+// Jika belum bisa impor, untuk sementara bisa definisikan di sini (kurang ideal untuk jangka panjang):
+
+type ProjectCardProps = {
+  project: ProjectType;
+  onOpenModal: (project: ProjectType) => void; // onOpenModal juga menerima ProjectType
+};
+
+export default function ProjectCard({
+  project,
+  onOpenModal,
+}: ProjectCardProps) {
+  // Terapkan tipe di sini
   return (
     <div
-      key={project.id}
+      // key={project.id} // key sebaiknya diletakkan saat mapping di komponen induk (ProjectsSection)
       className='bg-gray-50 rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col'
       onClick={() => onOpenModal(project)}
     >
@@ -35,6 +53,9 @@ export default function ProjectCard({ project, onOpenModal }) {
             Role: {project.role}
           </p>
           <div className='flex flex-wrap gap-2'>
+            {/* Sekarang karena project.techStack memiliki tipe (string[] dari ProjectType),
+              'tech' akan otomatis diinfer sebagai string, dan 'index' sebagai number.
+            */}
             {project.techStack.map((tech, index) => (
               <span
                 key={index}
@@ -47,7 +68,7 @@ export default function ProjectCard({ project, onOpenModal }) {
         </div>
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Mencegah trigger onClick dari div utama kartu
+            e.stopPropagation();
             onOpenModal(project);
           }}
           className='font-sans text-sm text-black hover:underline self-start mt-2'
