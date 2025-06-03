@@ -1,5 +1,6 @@
 // components/ExperienceSection.js
-import ExperienceItem from './ExperienceItem'; // Import sub-komponen
+import { motion } from 'framer-motion'; // Import motion
+import ExperienceItem from './ExperienceItem';
 
 const experiences = [
   {
@@ -46,20 +47,32 @@ const experiences = [
   },
 ];
 
+// Definisikan varian animasi
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export default function ExperienceSection() {
   return (
-    <section
+    <motion.section // Gunakan motion.section
       id='experience'
       className='w-full py-16 sm:py-20 md:py-24 px-6 sm:px-8 lg:px-16 bg-gray-50 text-black'
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.2 }} // amount: 0.2 agar lebih cepat trigger
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      variants={sectionVariants}
     >
       <div className='max-w-4xl mx-auto'>
         <h2 className='text-3xl sm:text-4xl font-mono font-bold text-center mb-12 sm:mb-16 text-black'>
           My Experience
         </h2>
         <div className='space-y-12'>
+          {/* Kita bisa juga menganimasikan setiap ExperienceItem dengan stagger di sini nanti jika mau */}
           {experiences.map((exp, index) => (
             <ExperienceItem
-              key={index} // Sebaiknya gunakan ID unik jika ada, untuk sekarang index cukup
+              key={index}
               company={exp.company}
               location={exp.location}
               dates={exp.dates}
@@ -69,6 +82,6 @@ export default function ExperienceSection() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

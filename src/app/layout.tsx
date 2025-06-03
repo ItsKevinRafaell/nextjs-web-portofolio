@@ -20,7 +20,11 @@ export const metadata = {
     'A portfolio website for Kevin Pierre Rafael Sabran, Laravel and Flutter Developer.',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang='en'

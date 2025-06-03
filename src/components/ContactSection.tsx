@@ -1,11 +1,25 @@
 // components/ContactSection.js
+import { motion } from 'framer-motion'; // Import motion
+
+// Definisikan varian animasi
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export default function ContactSection() {
   return (
-    <section
+    <motion.section // Gunakan motion.section
       id='contact'
       className='w-full py-16 sm:py-20 md:py-24 px-6 sm:px-8 lg:px-16 bg-white text-black'
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      variants={sectionVariants}
     >
       <div className='max-w-3xl mx-auto text-center'>
+        {/* ... Konten ContactSection tetap sama ... */}
         <h2 className='text-3xl sm:text-4xl font-mono font-bold mb-8 sm:mb-10 text-black'>
           Let's Connect
         </h2>
@@ -35,6 +49,6 @@ export default function ContactSection() {
           Located in Malang, Indonesia.
         </p>
       </div>
-    </section>
+    </motion.section>
   );
 }
